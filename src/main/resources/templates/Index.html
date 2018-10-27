@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringMVC接口接受参数示例</title>
+</head>
+<body>
+<div>
+    <button onclick="requestTest1();">PathVariable</button>
+    <button onclick="requestTest2();">RequestParam</button>
+</div>
+<div id="responseDiv"></div>
+<script src="js/jquery-1.6.4.min.js"></script>
+<script>
+    $(function () {
+       console.log("初始化成功！");
+    });
+    function  requestTest1() {
+        $.get("api/getTest/PathVariable/123",function (res) {
+            $("#responseDiv").html(res);
+        });
+    }
+    function  requestTest2() {
+        $.ajax({
+            "url":"api/getTest/RequestParam",
+            "type":"GET",
+            "data":{
+                "id":"12",
+                "array":[1,2,3,4]
+            },
+            "success":function (res) {
+                $("#responseDiv").html(JSON.stringify(res));
+            },
+        });
+        /*$.get("api/getTest/RequestParam",{"id":"12","array":[1,2,3,4]},function (res) {
+            $("#responseDiv").html(JSON.stringify(res));
+        });*/
+    }
+</script>
+</body>
+</html>

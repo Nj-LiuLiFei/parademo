@@ -6,8 +6,29 @@
 </head>
 <body>
 <div>
-    <button onclick="requestTest1();">PathVariable</button>
-    <button onclick="requestTest2();">RequestParam</button>
+    <a href="https://oscarotero.com/jquery/" target="_blank">前端网址</a><br>
+    <button onclick="requestTest1();">PathVariable</button><br>
+    <button onclick="requestTest2();">RequestParam</button><br>
+    <button onclick="requestTest3();">Get请求后台实体接受</button><br>
+    <form action="/api/getTest/RequestParam4" method="get">
+        <input type="text" name="id">
+        <select name="text">
+            <option value="测试1">测试1</option>
+            <option value="测试2">测试2</option>
+            <option value="测试3">测试3</option>
+        </select>
+        <input type="checkbox" name="array" value="1">
+        <input type="checkbox" name="array" value="2">
+        <input type="checkbox" name="array" value="3">
+        <button type="submit">Form表单实体接受</button><br>
+    </form>
+    <button onclick="requestTest4();">Post请求基本类型,数组,Map,List。基本类接受</button><br>
+    <button onclick="requestTest5();">Post请求基本类型,数组,Map,List。Map接受</button><br>
+    <button onclick="requestTest6();">Post请求基本类型,数组,Map,List。内部类接受</button><br>
+    <button onclick="requestTest7();">Post请求基本类型,数组,Map,List,List&lt;T&gt;。内部类接受</button><br>
+    <button onclick="requestTest8();">FormData 对象 Post请求基本类型,数组,List,List&lt;T&gt;。内部类接受</button><br>
+    <button onclick="requestTest9();">简单的数据格式 Post请求接受</button><br>
+    <button onclick="requestTest10();">一个基本类型、一个Bean Post请求接受</button><br>
 </div>
 <div id="responseDiv"></div>
 <script src="js/jquery-1.6.4.min.js"></script>
@@ -35,6 +56,208 @@
         /*$.get("api/getTest/RequestParam",{"id":"12","array":[1,2,3,4]},function (res) {
             $("#responseDiv").html(JSON.stringify(res));
         });*/
+    }
+    function  requestTest3() {
+        /*
+        * 数组传输的时候 会在name后面增加[]字符。
+        * Ajax 传输默认 traditional false,
+        * 在jQuery 1.4中，.param()会深度递归一个对象来满足现在脚本语言和框架，比如PHP， Ruby on Rails等。
+        * 你可以通过jQuery.ajaxSettings.traditional = true; 来全局得禁用这个功能。
+        *
+        * */
+        $.ajax({
+            "url":"api/getTest/RequestParam3",
+            "type":"GET",
+            "traditional":true, /* 必须属性 */
+            "data":{
+                "id":12,
+                "array":[1,2,3,"测试中文乱码"],
+            },
+            "success":function (res) {
+                $("#responseDiv").html(JSON.stringify(res));
+            },
+        });
+        /*$.get("api/getTest/RequestParam",{"id":"12","array":[1,2,3,4]},function (res) {
+            $("#responseDiv").html(JSON.stringify(res));
+        });*/
+    }
+    function  requestTest4() {
+        /*
+        * 对于复杂的Post数据提交
+        * 必须使用JSON 字符串格式 指定contentType = application/json;charset=UTF-8
+        * 但是数据在传输的时候只能传输字符串，所以要对JSON对象进行序列号，转化为json字符串传输
+        * */
+        $.ajax({
+            "url":"api/getTest/RequestParam5",
+            "type":"POST",
+            "contentType":"application/json;charset=UTF-8",
+            "data":JSON.stringify({
+                "id":"12",
+                "text":"测试中文乱码",
+                "strings":[1,2,3,4],
+                "list":["list集合0","list集合1","list集合2"],
+                "map":{
+                    "key1":"Map键值对1",
+                    "key2":"Map键值对2",
+                    "key3":"Map键值对3"
+                }
+            }),
+            "success":function (res) {
+                $("#responseDiv").html(JSON.stringify(res));
+            },
+        });
+        /*$.get("api/getTest/RequestParam",{"id":"12","array":[1,2,3,4]},function (res) {
+            $("#responseDiv").html(JSON.stringify(res));
+        });*/
+    }
+    function  requestTest5() {
+        /*
+        * 对于复杂的Post数据提交
+        * 必须使用JSON 字符串格式 指定contentType = application/json;charset=UTF-8
+        * 但是数据在传输的时候只能传输字符串，所以要对JSON对象进行序列号，转化为json字符串传输
+        * */
+        $.ajax({
+            "url":"api/getTest/RequestParam6",
+            "type":"POST",
+            "contentType":"application/json;charset=UTF-8",
+            "data":JSON.stringify({
+                "id":"12",
+                "text":"测试中文乱码",
+                "strings":[1,2,3,4],
+                "list":["list集合0","list集合1","list集合2"],
+                "map":{
+                    "key1":"Map键值对1",
+                    "key2":"Map键值对2",
+                    "key3":"Map键值对3"
+                }
+            }),
+            "success":function (res) {
+                $("#responseDiv").html(JSON.stringify(res));
+            },
+        });
+        /*$.get("api/getTest/RequestParam",{"id":"12","array":[1,2,3,4]},function (res) {
+            $("#responseDiv").html(JSON.stringify(res));
+        });*/
+    }
+    function  requestTest6() {
+        /*
+        * 对于复杂的Post数据提交
+        * 必须使用JSON 字符串格式 指定contentType = application/json;charset=UTF-8
+        * 但是数据在传输的时候只能传输字符串，所以要对JSON对象进行序列号，转化为json字符串传输
+        * */
+        $.ajax({
+            "url":"api/getTest/RequestParam7",
+            "type":"POST",
+            "contentType":"application/json;charset=UTF-8",
+            "data":JSON.stringify({
+                "id":"12",
+                "text":"测试中文乱码",
+                "strings":[1,2,3,4],
+                "list":["list集合0","list集合1","list集合2"],
+                "map":{
+                    "key1":"Map键值对1",
+                    "key2":"Map键值对2",
+                    "key3":"Map键值对3"
+                }
+            }),
+            "success":function (res) {
+                $("#responseDiv").html(JSON.stringify(res));
+            },
+        });
+        /*$.get("api/getTest/RequestParam",{"id":"12","array":[1,2,3,4]},function (res) {
+            $("#responseDiv").html(JSON.stringify(res));
+        });*/
+    }
+    function  requestTest7() {
+        /*
+        * 对于复杂的Post数据提交
+        * 必须使用JSON 字符串格式 指定contentType = application/json;charset=UTF-8
+        * 但是数据在传输的时候只能传输字符串，所以要对JSON对象进行序列号，转化为json字符串传输
+        * */
+        $.ajax({
+            "url":"api/getTest/RequestParam8",
+            "type":"POST",
+            "contentType":"application/json;charset=UTF-8",
+            "data":JSON.stringify({
+                "id":"12",
+                "text":"测试中文乱码",
+                "strings":[1,2,3,4],
+                "list":["list集合0","list集合1","list集合2"],
+                "map":{
+                    "key1":"Map键值对1",
+                    "key2":"Map键值对2",
+                    "key3":"Map键值对3"
+                },
+                "demo3List":[
+                    {"id":100,"array":[1,2,3,"测试中文乱码"]},
+                    {"id":101,"array":[1,2,3,"测试中文乱码"]},
+                    {"id":102,"array":[1,2,3,"测试中文乱码"]}
+                ]
+            }),
+            "success":function (res) {
+                $("#responseDiv").html(JSON.stringify(res));
+            },
+        });
+    }
+    function  requestTest8() {
+        /*
+        *
+        * Map 类型好像无法传输，目前没找到Map传输的方法
+        * */
+        var formData = new FormData();
+        formData.append("id","12");
+        formData.append("text","FormData测试Post参数提交");
+        formData.append("strings",["strings0","strings1","strings3"].join(","));
+        formData.append("list",["formData集合0","formData集合1","formData集合2"].join(","));
+        //formData.append("map","");
+
+        $.ajax({
+            "url":"api/getTest/RequestParam9",
+            "type":"POST",
+            "contentType":false,
+            "processData": false,
+            "data":formData,
+            "success":function (res) {
+                $("#responseDiv").html(JSON.stringify(res));
+            },
+        });
+    }
+    function  requestTest9() {
+        /*
+        *简单的数据格式
+        *contentType 默认"application/x-www-form-urlencoded"
+        * */
+
+        $.ajax({
+            "url":"api/getTest/RequestParam10",
+            "type":"POST",
+            "data":{
+                "id":12,
+                "text":"测试基本数据",
+            },
+            "success":function (res) {
+                $("#responseDiv").html(JSON.stringify(res));
+            },
+        });
+    }
+    function  requestTest10() {
+        /*
+        *简单的数据格式
+        *contentType 默认"application/x-www-form-urlencoded"
+        * */
+
+        $.ajax({
+            "url":"api/getTest/RequestParam11",
+            "type":"POST",
+            "data":{
+                "name":"我是谁？",
+                "id":12,
+                "text":"测试基本数据",
+            },
+            "success":function (res) {
+                $("#responseDiv").html(JSON.stringify(res));
+            },
+        });
     }
 </script>
 </body>

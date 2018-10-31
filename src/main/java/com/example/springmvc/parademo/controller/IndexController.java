@@ -4,6 +4,7 @@ import com.example.springmvc.parademo.model.Demo3;
 import com.example.springmvc.parademo.model.Demo4;
 import com.example.springmvc.parademo.model.Demo5;
 import com.example.springmvc.parademo.model.Demo7;
+import com.google.gson.Gson;
 import org.apache.logging.log4j.spi.LoggerRegistry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -109,6 +110,23 @@ public class IndexController {
         Map map = new HashMap<String,Object>();
         map.put("name",name);
         map.put("result",demo6);
+        return new ResponseEntity(map,HttpStatus.OK);
+    }
+
+    /*
+    * GET 请求不需要加@RequestBody
+    * 加了会报错。因为RequestBody是针对于POST请求的实体
+    * */
+    @GetMapping(value = "getTest/RequestParam12")
+    public ResponseEntity getRequestParam12(
+             @RequestParam String json,
+             Demo6 demo6){
+        Gson gson = new Gson();
+        Map<String,Object> map1 = gson.fromJson(json,Map.class);
+        Map map = new HashMap<String,Object>();
+        map.put("result",demo6);
+        map.put("json",json);
+        map.put("map",map1);
         return new ResponseEntity(map,HttpStatus.OK);
     }
 

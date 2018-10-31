@@ -29,6 +29,7 @@
     <button onclick="requestTest8();">FormData 对象 Post请求基本类型,数组,List,List&lt;T&gt;。内部类接受</button><br>
     <button onclick="requestTest9();">简单的数据格式 Post请求接受</button><br>
     <button onclick="requestTest10();">一个基本类型、一个Bean Post请求接受</button><br>
+    <button onclick="requestTest11();">简单的 Get Bean请求接受</button><br>
 </div>
 <div id="responseDiv"></div>
 <script src="js/jquery-1.6.4.min.js"></script>
@@ -258,6 +259,37 @@
                 $("#responseDiv").html(JSON.stringify(res));
             },
         });
+    }
+    function  requestTest11() {
+        /**
+         * 针对ajax 传输数组 必须使用 join(",")
+         * 而且只能是英文逗号，其他字符后台无法解析
+         * 针对Map 参数不需要自己解析。执行JSON格式就可以了
+         * join 的数组不能包含应为逗号,因为会导致后台截取错误
+         *
+         */
+
+        $.get("api/getTest/RequestParam12",
+            {
+                "id":"12",
+                "text":"测试GET",
+                "strings":["你","好","世","界"].join(","),
+                "map":{
+                    "GetMap1":"呵呵哒",
+                    "GetMap2":"为什么要呵呵哒",
+                },
+                "list":["List1","List2","List3","List测试"].join(","),
+                "json":JSON.stringify({
+                    "abc":"123",
+                    "list":[1,2,3,4],
+                    "e":{
+                      "name":"name23"
+                    },
+                })
+            }
+            ,function (res) {
+             $("#responseDiv").html(JSON.stringify(res));
+         });
     }
 </script>
 </body>
